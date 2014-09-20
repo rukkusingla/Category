@@ -1,5 +1,5 @@
 var mongoose=require('mongoose');
-mongoose.connect('mongodb://192.168.1.8/test')
+mongoose.connect('mongodb://piyush:piyush@kahana.mongohq.com:10085/sample')
 
 var Schema=mongoose.Schema;
 
