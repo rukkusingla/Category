@@ -4,10 +4,12 @@ var port = json.Port;
 var host = json.Host;
 var express = require('express');
 var callerCatDetails = require('./caller.js');
-
+var bodyParser = require('body-parser')
 
 var app = express.createServer();
-app.use(express.bodyParser());
+app.use(bodyParser.json());       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded());
+app.use(express.json());
 app.use(app.router);
 app.use(express.static(__dirname + '/views/html_pages'));
 app.set('views', __dirname + '/views');
@@ -18,11 +20,11 @@ app.get("/",function(request,response){
 	response.render('index.html');
 });
 
-app.get("/home",function(request,response){
-	var username = request.query['username'];
-	var password = request.query['password'];
+app.post("/home",function(request,response){
+	var username = request.body.username;
+	var password = request.body.password;
 	callerCatDetails.getEntireDetails(username,password,function(Results){
-		console.log(Results);		
+		console.log(Results);
 		response.render('mapTest',{Results:Results,username:username});
 		//response.json(Results);
 	});
